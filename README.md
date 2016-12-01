@@ -52,17 +52,12 @@ You will want to make a project directory, a git repo, and run npm init inside y
     }
 
     * On your HTML side, make an Ajax request to your new API on the GET /turtles route
-
     a. Show the turtles in a list on page load
-
     b. In other words, as soon as the page loads, call your server with AJAX to GET your /turtles
 
     * Add a form at the bottom of the page to create a new turtle calling the POST /turtles route
-
     a. On click of the form submit button, it should send the new turtle data over as a POST,
-
     b. Your page should then add the turtle to the list using jQuery
-
     c. Note: if you refresh the page, it will lose the new turtle data!
 
 ## Bonus features

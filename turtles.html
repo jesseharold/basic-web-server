@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TMNT app</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+#target {
+  border:1px solid black;
+  height: 250px;
+}
+.container{
+    width: 250px;
+    margin:10px auto;
+}
+</style>
+</head>
+<body>
+    <div id="target" class="container">
+
+    </div>
+    
+	<div class="container">
+        <h3>Add a New Turtle</h3>
+        <form>
+            Name:
+            <br>
+            <input type="text" id="turtleName" name="name" />
+            <br>
+            Favorite Food:
+            <br>
+            <input type="text" id="turtleFood" name="favFood" />
+            <br>
+            <br>
+            <button id="submit">Submit</button>
+        </form>
+    </div>
+    <script lang="JavaScript">
+        $(document).ready(function(){
+            $.ajax({
+                url: "http://localhost:3000/turtles",
+                method: "GET"
+            })
+            .done(function(response) {
+                for (var i = 0; i < response.data.length; i++){
+                    $("#target").append("<div>" + response.data[i].name + ": " + response.data[i].favFood);
+                }
+                
+            })
+            .fail(function ( jqXHR, textStatus, errorThrown ) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            });
+
+            $("#submit").click(function(){
+                var turtleName = $("#turtleName").val();
+                var turtleFood = $("#turtleFood").val();
+                if (turtleFood && turtleName){
+                    $.ajax({
+                        url: "http://localhost:3000/turtles",
+                        method: "POST",
+                        data: {name: turtleName, favFood: turtleFood}
+                    })
+                    .done(function(response) {
+                        console.log(response);
+                    });
+                } else {
+                    alert("You must fill in all form fields.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
