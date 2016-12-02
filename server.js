@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyparser = require("simple-bodyparser");
 var fs = require("fs");
+var http = require("http");
 var turtlesLoaded = require("./data/turtles.json");
 
 var app = express();
@@ -8,20 +9,15 @@ app.use(bodyparser());
 
 // Add headers
 app.use(function (req, res, next) {
-
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', null);
-
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
-
     // Pass to next layer of middleware
     next();
 });
@@ -55,18 +51,24 @@ var turtles =  {
 
 // look for stored value from the file
 if (turtlesLoaded){
+  //replace default value
   turtles = turtlesLoaded;
 }
 
+// ROUTES
+
 app.get("/turtles", function (request, response) {
     response.send(turtles);
+});
+app.get("/turtle_images", function (request, response) {
+    //response.send(turtles);
 });
 app.post("/turtles", function (request, response) {
     var postData = request.body.split("&");
     var newTurtle = {};
     for (var i = 0; i < postData.length; i++){
       var property = postData[i].split("=");
-      newTurtle[property[0]] = property[1];
+      newTurtle[property[0]] = decodeURIComponent(property[1]);
     }
     turtles.data.push(newTurtle);
     writeDataToServer(turtles);
