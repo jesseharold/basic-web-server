@@ -53,6 +53,11 @@ var turtles =  {
       ]
     };
 
+// look for stored value from the file
+if (turtlesLoaded){
+  turtles = turtlesLoaded;
+}
+
 app.get("/turtles", function (request, response) {
     response.send(turtles);
 });
