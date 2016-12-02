@@ -15,7 +15,18 @@
     width: 200px;
     height: 200px;
     display: block;
+    margin: 10px;
 }
+#moreTurtles {    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    min-height: 200px;
+    background-color: aliceblue;
+    text-align: center;
+}
+
 </style>
 </head>
 <body>
@@ -42,7 +53,9 @@
             <br>
             <button id="submit">Submit</button>
         </form>
-        <button id="getGiphy">See Turtle Images!</button>
+    </div>
+    <div id="moreTurtles">
+        <button id="getGiphy">See More Turtle Images!</button>
     </div>
     <script lang="JavaScript">
         $(document).ready(function(){
@@ -87,7 +100,11 @@
                     method: "GET"
                 })
                 .done(function(response) {
-                    console.log(response);
+                    var giphyObject = JSON.parse(response);
+                    for (var i = 0; i < giphyObject.data.length; i++){
+                        $("#moreTurtles").append("<img class='turtle-image' src='" + giphyObject.data[i].images.fixed_width.url + "' />");
+                    }
+                    $("#getGiphy").hide();
                 });
             })
         });

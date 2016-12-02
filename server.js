@@ -61,7 +61,7 @@ app.get("/turtles", function (req, response) {
     response.send(turtles);
 });
 app.get("/turtle_images", function (req, response) {
-    request.get("http://api.giphy.com/v1/gifs/search", {q:"TMNT+turtle", api_key:"dc6zaTOxFJmzC", limit: 1}, function(error, data){
+    request.get("http://api.giphy.com/v1/gifs/search?q=TMNT+turtle&api_key=dc6zaTOxFJmzC&limit=10", {}, function(error, data){
       response.send(data.body);
     })
 });
