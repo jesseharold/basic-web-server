@@ -32,6 +32,11 @@
             <input type="text" id="turtleFood" name="favFood" />
             <br>
             <br>
+             Link to Image:
+            <br>
+            <input type="text" id="turtleImage" name="image" />
+            <br>
+            <br>
             <button id="submit">Submit</button>
         </form>
     </div>
@@ -56,11 +61,12 @@
             $("#submit").click(function(){
                 var turtleName = $("#turtleName").val();
                 var turtleFood = $("#turtleFood").val();
+                var turtleImage = $("#turtleImage").val();
                 if (turtleFood && turtleName){
                     $.ajax({
                         url: "http://localhost:3000/turtles",
                         method: "POST",
-                        data: {name: turtleName, favFood: turtleFood}
+                        data: {name: turtleName, favFood: turtleFood, image: turtleImage}
                     })
                     .done(function(response) {
                         console.log(response);
