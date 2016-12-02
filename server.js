@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyparser = require("simple-bodyparser");
 var fs = require("fs");
-var http = require("http");
+var request = require("request");
 var turtlesLoaded = require("./data/turtles.json");
 
 var app = express();
@@ -57,14 +57,16 @@ if (turtlesLoaded){
 
 // ROUTES
 
-app.get("/turtles", function (request, response) {
+app.get("/turtles", function (req, response) {
     response.send(turtles);
 });
-app.get("/turtle_images", function (request, response) {
-    //response.send(turtles);
+app.get("/turtle_images", function (req, response) {
+    request.get("http://api.giphy.com/v1/gifs/search", {q:"TMNT+turtle", api_key:"dc6zaTOxFJmzC", limit: 1}, function(error, data){
+      response.send(data.body);
+    })
 });
-app.post("/turtles", function (request, response) {
-    var postData = request.body.split("&");
+app.post("/turtles", function (req, response) {
+    var postData = req.body.split("&");
     var newTurtle = {};
     for (var i = 0; i < postData.length; i++){
       var property = postData[i].split("=");

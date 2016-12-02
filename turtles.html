@@ -42,6 +42,7 @@
             <br>
             <button id="submit">Submit</button>
         </form>
+        <button id="getGiphy">See Turtle Images!</button>
     </div>
     <script lang="JavaScript">
         $(document).ready(function(){
@@ -79,6 +80,16 @@
                     alert("You must fill in all form fields.");
                 }
             });
+
+            $("#getGiphy").click(function(){
+                $.ajax({
+                    url: "http://localhost:3000/turtle_images",
+                    method: "GET"
+                })
+                .done(function(response) {
+                    console.log(response);
+                });
+            })
         });
     </script>
 </body>
